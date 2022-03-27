@@ -1,3 +1,32 @@
+# Memoria
+
+- Para empezar debemos instalar las librerias asociadas a este proyecto para ello ejecuta:
+
+### `npm install`
+
+- Después de instalar todas las librerias y dependencias, se debe ejecutar el proyecto con
+
+### `npm start`
+
+- Librerias usadas:
+
+  ### `react-router-dom`
+
+  Para el tema de la navegación a traves de las rutas expuestas en App.tsx.
+
+  ### `axios`
+
+  Para gestionar el tema de peticiones (GET, POST, etc) en la api de breaking bad https://breakingbadapi.com/
+
+  ### `typescritp`
+
+  Para el tipado de datos.
+
+  ### `material-ui`
+
+  Para utilizar componentes definidos en esta libería para la maquetación del diseño web de la aplicación.
+  Por ejemplo, <Menu/> <Button/> <Table> ,etc.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

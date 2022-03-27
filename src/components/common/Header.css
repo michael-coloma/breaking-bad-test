@@ -1,0 +1,19 @@
+.container {
+  position: relative;
+}
+
+.image {
+  max-width: 100%;
+}
+
+.language {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  background-color: #e7cc86;
+  width: 118px;
+}
+
+.breadcrumbs {
+  margin-top: 1em !important;
+}
