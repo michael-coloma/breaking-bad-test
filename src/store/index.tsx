@@ -18,8 +18,8 @@ const localStorageMiddleware = ({ getState }: any) => {
   };
 };
 
-//To get stateInital via localStorage and keep login persistent
-const reHydrateStore = () => {
+//To get stateInital via localStorage and keep persistent the language selected
+export const reHydrateStore = () => {
   return JSON.parse(localStorage.getItem("userActionsSate") || "{}");
 };
 

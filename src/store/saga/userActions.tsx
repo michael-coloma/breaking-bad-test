@@ -1,7 +1,15 @@
 import axios from "axios";
-import { call, CallEffect, PutEffect, takeLatest } from "redux-saga/effects";
+import {
+  call,
+  CallEffect,
+  PutEffect,
+  takeLatest,
+  put,
+} from "redux-saga/effects";
+
 import { UserActionsAction } from "../actions/userActions";
 import { EnumUserActions } from "../actions/userActionsTypes";
+import { UserActionsState } from "../reducers/userActions";
 
 export function* userActionsMainSaga() {
   yield takeLatest(EnumUserActions.CHANGE_LANGUAGE_REQUEST, userActionsSaga);
@@ -23,7 +31,23 @@ function* userActionsSaga(action: UserActionsAction): Generator<
     return await axios.get(url);
   };
 
-  const response = yield call(getAxios);
+  const data: UserActionsState = {
+    data: {},
+    language,
+    message: "success",
+  };
 
-  console.log("log_response: ", response);
+  try {
+    const response = yield call(getAxios);
+
+    yield put({
+      type: EnumUserActions.CHANGE_LANGUAGE_SUCCESS,
+      data: { ...data, data: response.data },
+    });
+  } catch {
+    yield put({
+      type: EnumUserActions.CHANGE_LANGUAGE_FAIL,
+      data: { ...data, message: "error" },
+    });
+  }
 }
