@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { routes } from "../../conf/routes";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Button from "@material-ui/core/Button";
@@ -11,21 +12,56 @@ import Menu from "@material-ui/core/Menu";
 import LanguageIcon from "@material-ui/icons/Language";
 
 import "./Header.css";
+import { changeLanguageRequest } from "../../store/actions/userActions";
 
-const options = ["Idiomas", "Español", "Inglés"];
+import { i18n, setLanguage } from "../../utils/i18n";
+import { RootState } from "../../store/reducers/rootReducer";
+
+enum EnumLanguage {
+  SPANISH = 1,
+  ENGLISH = 2,
+}
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState<null | HTMLElement>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState(1);
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    EnumLanguage.SPANISH
+  );
+
+  const dispatch = useDispatch();
+  const options = [i18n("languages"), i18n("spanish"), i18n("english")];
+
+  //it is neccessary for load the language correctly
+  const rootState = useSelector((state: RootState) => state);
+  const language = rootState.userActions.language || "es";
+  setLanguage(language);
+
+  useEffect(() => {
+    //it is neccessary for load the language correctly
+    const language = rootState.userActions.language || "es";
+    dispatch(changeLanguageRequest(language));
+    setLanguage(language);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); //To get language when the page is reload
 
   const handleClickLanguage = (event: React.MouseEvent<HTMLElement>) => {
     setShowMenu(event.currentTarget);
   };
 
   const handleMenuItemClick = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     index: number
   ) => {
+    switch (index) {
+      case EnumLanguage.ENGLISH:
+        dispatch(changeLanguageRequest("en"));
+        break;
+
+      default:
+        dispatch(changeLanguageRequest("es"));
+        break;
+    }
+
     setSelectedLanguage(index);
     setShowMenu(null);
   };
@@ -49,7 +85,7 @@ const Header = () => {
           startIcon={<LanguageIcon />}
           onClick={handleClickLanguage}
         >
-          Idiomas
+          {i18n("languages")}
         </Button>
 
         <Menu
@@ -74,10 +110,10 @@ const Header = () => {
 
       <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
         <Link color="inherit" to={routes.ALL_CHARACTERS}>
-          Todos los personajes
+          {i18n("all characters")}
         </Link>
         <Link color="inherit" to={routes.CHARACTER}>
-          pesonaje
+          {i18n("character")}
         </Link>
       </Breadcrumbs>
     </div>
