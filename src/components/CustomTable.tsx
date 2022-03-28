@@ -15,8 +15,12 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import { Grid, TableCell, TableHead } from "@material-ui/core";
 
+import { useNavigate } from "react-router";
+
 import { DataAllCharacters } from "./AllCharacters";
 import I18n from "./common/I18n";
+
+import "./CustomTable2.css";
 
 import { useWindowSize } from "../utils/hooks";
 
@@ -134,7 +138,14 @@ const renderCellDesktop = (
   }
 };
 
-const renderBody = (row: DataAllCharacters, windowSizeWidth: number) => {
+const renderBody = (
+  row: DataAllCharacters,
+  windowSizeWidth: number,
+  navigation: any
+) => {
+  const redirectToCharacter = (rowId: number, navigation: any) => {
+    navigation(`/character/${rowId}`);
+  };
   if (windowSizeWidth < WIDTH_MAX_MOBILE) {
     return (
       <TableRow key={row.char_id}>
@@ -158,7 +169,13 @@ const renderBody = (row: DataAllCharacters, windowSizeWidth: number) => {
     );
   } else {
     return (
-      <TableRow key={row.char_id}>
+      <TableRow
+        className="rowSelected"
+        key={row.char_id}
+        onClick={() => {
+          redirectToCharacter(row.char_id, navigation);
+        }}
+      >
         {columns.map((column: ColumnTableCharacters, index) => (
           <TableCell
             key={column.id}
@@ -178,6 +195,7 @@ interface RenderTableProps {
   rowsPerPage: number;
   props: CustomTableProps;
   windowSize: any;
+  navigation: any;
   onSetPage: (newPage: number) => void;
 }
 
@@ -189,7 +207,7 @@ const TableCharacters = (propsRenderTable: RenderTableProps) => {
     propsRenderTable.onSetPage(newPage);
   };
 
-  const { page, rowsPerPage, props, windowSize } = propsRenderTable;
+  const { page, rowsPerPage, props, windowSize, navigation } = propsRenderTable;
 
   return (
     <Table aria-label="custom pagination table">
@@ -200,7 +218,6 @@ const TableCharacters = (propsRenderTable: RenderTableProps) => {
               <TableCell
                 key={column.id}
                 align="center"
-                //   style={{ minWidth: column.minWidth }}
                 style={{ fontWeight: 800 }}
               >
                 {column.value}
@@ -216,7 +233,9 @@ const TableCharacters = (propsRenderTable: RenderTableProps) => {
               page * rowsPerPage + rowsPerPage
             )
           : props.data
-        ).map((row: DataAllCharacters) => renderBody(row, windowSize.width))}
+        ).map((row: DataAllCharacters) =>
+          renderBody(row, windowSize.width, navigation)
+        )}
       </TableBody>
 
       {props.pagination && (
@@ -263,6 +282,8 @@ const CustomTable = (props: CustomTableProps) => {
 
   const windowSize = useWindowSize();
 
+  const navigation = useNavigate();
+
   return (
     <TableContainer component={Paper}>
       <TableCharacters
@@ -270,6 +291,7 @@ const CustomTable = (props: CustomTableProps) => {
         rowsPerPage={rowsPerPage}
         props={props}
         windowSize={windowSize}
+        navigation={navigation}
         onSetPage={(newPage: number) => setPage(newPage)}
       />
     </TableContainer>
