@@ -30,9 +30,7 @@ const Character = () => {
   return (
     <Container maxWidth="lg">
       <Header />
-      <h2>
-        <I18n text="character" />
-      </h2>
+      <h2>{data[0]?.name || <I18n text="character" />}</h2>
       {!isEmpty(data) ? (
         <Grid
           container
