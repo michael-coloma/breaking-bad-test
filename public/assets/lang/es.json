@@ -3,5 +3,10 @@
     "character": "Personaje",
     "languages": "Idiomas",
     "spanish": "Español",
-    "english": "Inglés"
+    "english": "Inglés",
+    "no exist data": "No existen datos",
+    "image " :"Imagen",
+    "name": "Nombre",
+    "nick name": "Apodo",
+    "appearance" : "Apariciones"
 }

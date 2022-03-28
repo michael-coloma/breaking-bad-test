@@ -3,5 +3,10 @@
     "character": "Character",
     "languages": "Languages",
     "spanish": "Spanish" ,
-    "english": "English"
+    "english": "English",
+    "no exist data": "No exist data",
+    "image " :"Image",
+    "name": "Name",
+    "nick name": "Nick name",
+    "appearance" : "Appearance"
 }
