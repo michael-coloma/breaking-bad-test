@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { routes } from "../../conf/routes";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Button from "@material-ui/core/Button";
@@ -14,8 +14,7 @@ import LanguageIcon from "@material-ui/icons/Language";
 import "./Header.css";
 import { changeLanguageRequest } from "../../store/actions/userActions";
 
-import { i18n, setLanguage } from "../../utils/i18n";
-import { RootState } from "../../store/reducers/rootReducer";
+import I18n from "./I18n";
 
 enum EnumLanguage {
   SPANISH = 1,
@@ -29,20 +28,7 @@ const Header = () => {
   );
 
   const dispatch = useDispatch();
-  const options = [i18n("languages"), i18n("spanish"), i18n("english")];
-
-  //it is neccessary for load the language correctly
-  const rootState = useSelector((state: RootState) => state);
-  const language = rootState.userActions.language || "es";
-  setLanguage(language);
-
-  useEffect(() => {
-    //it is neccessary for load the language correctly
-    const language = rootState.userActions.language || "es";
-    dispatch(changeLanguageRequest(language));
-    setLanguage(language);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); //To get language when the page is reload
+  const options = ["languages", "spanish", "english"];
 
   const handleClickLanguage = (event: React.MouseEvent<HTMLElement>) => {
     setShowMenu(event.currentTarget);
@@ -85,7 +71,7 @@ const Header = () => {
           startIcon={<LanguageIcon />}
           onClick={handleClickLanguage}
         >
-          {i18n("languages")}
+          <I18n text="languages" />
         </Button>
 
         <Menu
@@ -102,7 +88,7 @@ const Header = () => {
               selected={index === selectedLanguage}
               onClick={(event) => handleMenuItemClick(event, index)}
             >
-              {option}
+              <I18n text={option} />
             </MenuItem>
           ))}
         </Menu>
@@ -110,10 +96,10 @@ const Header = () => {
 
       <Breadcrumbs aria-label="breadcrumb" className="breadcrumbs">
         <Link color="inherit" to={routes.ALL_CHARACTERS}>
-          {i18n("all characters")}
+          <I18n text="all characters" />
         </Link>
         <Link color="inherit" to={routes.CHARACTER}>
-          {i18n("character")}
+          <I18n text="character" />
         </Link>
       </Breadcrumbs>
     </div>

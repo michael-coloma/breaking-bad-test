@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/reducers/rootReducer";
 
 //Return the size of width and height of screen
 export function useWindowSize() {
@@ -21,4 +23,12 @@ export function useWindowSize() {
     return () => window.removeEventListener("resize", handleResize);
   }, []); // Empty array ensures that effect is only run on mount
   return windowSize;
+}
+
+export function GetRootState() {
+  //it is neccessary for load the language correctly
+  const rootState = useSelector((state: RootState) => state);
+  //const language = rootState.userActions.language || "es";
+
+  return rootState;
 }

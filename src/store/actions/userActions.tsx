@@ -9,7 +9,7 @@ export interface UserActionsAction {
 export const changeLanguageRequest = (language: string) => {
   return {
     type: EnumUserActions.CHANGE_LANGUAGE_REQUEST,
-    data: { language, data: {} },
+    data: { language },
   };
 };
 

@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import { Container } from "@material-ui/core";
 import Header from "./common/Header";
-import { i18n, setLanguage } from "../utils/i18n";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/reducers/rootReducer";
 import axios from "axios";
 import isEmpty from "lodash/isEmpty";
 import CustomTable from "./CustomTable";
+import I18n from "./common/I18n";
 
 export interface DataAllCharacters {
   appearance: number[];
@@ -26,11 +24,6 @@ export interface DataAllCharacters {
 const AllCharacters = () => {
   const [data, setData] = useState<DataAllCharacters[]>([]);
 
-  //it is neccessary for load the language correctly
-  const rootState = useSelector((state: RootState) => state);
-  const language = rootState.userActions.language || "es";
-  setLanguage(language);
-
   useEffect(() => {
     axios
       .get("https://www.breakingbadapi.com/api/characters")
@@ -43,12 +36,16 @@ const AllCharacters = () => {
   return (
     <Container maxWidth="lg">
       <Header />
-      <h2>{i18n("all characters")}</h2>
+      <h2>
+        <I18n text="all characters" />
+      </h2>
 
       {!isEmpty(data) ? (
         <CustomTable data={data} totalData={data.length} pagination={true} />
       ) : (
-        <p>{i18n("no exist data")}</p>
+        <p>
+          <I18n text="no exist data" />
+        </p>
       )}
     </Container>
   );

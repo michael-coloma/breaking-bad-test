@@ -15,11 +15,10 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import { Grid, TableCell, TableHead } from "@material-ui/core";
 
-import { useWindowSize } from "../utils/hooks";
 import { DataAllCharacters } from "./AllCharacters";
-import { i18n, setLanguage } from "../utils/i18n";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/reducers/rootReducer";
+import I18n from "./common/I18n";
+
+import { useWindowSize } from "../utils/hooks";
 
 export const WIDTH_MAX_MOBILE = 500;
 const DEFAULT_ROWS_PER_PAGE = 10;
@@ -248,26 +247,19 @@ interface CustomTableProps {
 
 interface ColumnTableCharacters {
   id: string;
-  value: string;
+  value: JSX.Element | string;
 }
 
 const columns: ColumnTableCharacters[] = [
-  { id: "img", value: i18n("image") },
-  { id: "name", value: i18n("name") },
-  { id: "nickname", value: i18n("nick name") },
-  { id: "appearance", value: i18n("appearance") },
+  { id: "img", value: <I18n text="image" /> },
+  { id: "name", value: <I18n text="name" /> },
+  { id: "nickname", value: <I18n text="nick name" /> },
+  { id: "appearance", value: <I18n text="appearance" /> },
 ];
 
 const CustomTable = (props: CustomTableProps) => {
   const [page, setPage] = useState(PAGE_INITIAL);
   const rowsPerPage = props.rowsPerPage || DEFAULT_ROWS_PER_PAGE;
-
-  //SetLanguageGlobal();
-
-  //it is neccessary for load the language correctly
-  const rootState = useSelector((state: RootState) => state);
-  const language = rootState.userActions.language || "es";
-  setLanguage(language);
 
   const windowSize = useWindowSize();
 
