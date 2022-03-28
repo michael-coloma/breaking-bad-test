@@ -16,13 +16,23 @@ const Character = () => {
   const { id } = useParams();
 
   const [data, setData] = useState<DataAllCharacters[]>([]);
+  const [dataquote, setDataQuote] = useState<any[]>([]);
 
   useEffect(() => {
     axios
       .get(`https://www.breakingbadapi.com/api/characters/${id}`)
       .then((request) => {
         setData(request.data);
-        console.log("log_Data: ", request);
+        const name = request.data[0]?.name;
+        const param = name.replace(" ", "+");
+        axios
+          .get(
+            `https://www.breakingbadapi.com/api/quote/random?author=${param}`
+          )
+          .then((request) => {
+            console.log("log_rqssss: ", request.data);
+            setDataQuote(request.data);
+          });
       })
       .catch((e: any) => {});
   }, [id]);
@@ -46,6 +56,7 @@ const Character = () => {
               src={data[0].img}
               height={TOP_IMAGE_HEIGHT}
             />
+            <p>{(!isEmpty(dataquote) && dataquote[0]?.quote) || ""}</p>
           </Grid>
 
           <Grid item xs={12} sm={8}>
