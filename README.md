@@ -8,6 +8,19 @@
 
 ### `npm start`
 
+- Explicación:
+  Para el tema de cambiar el lenguage se ha usado redux-saga. De forma que el idioma esta disponible en cualquier computo de la aplicación a traves del componente "I18n".
+  Basta con añadir como paramtero text y el texto a traducir. Dicho texto debera existir en en dos ficheros json (en.json y es.json) que se encuentran en la carpeta pública en assets.
+
+  La diseño aunuque simple se ha intentado que sea responsive.
+  Se ha estructura en proyecto en varias carpetas con la idea de tener un css en cada componente que haya considerado oportuno que lo tenga.
+  De igual manera de ha creado un directorio store para el tema de redux.
+
+  En el directorio utils se ha creado un hook para controlar el tema del diseño responsive para la tabla de datos. De esta forma se actualiza cuando se cambia las diferentes resoluciones.
+
+  Se ha intentado crear constantes usando enum de typescript.
+  De la misma forma se ha tipado los datos de algunas de las respuesta del backend y propieades de los componentes.
+
 - Librerias usadas:
 
   ### `react-router-dom`
@@ -25,7 +38,11 @@
   ### `material-ui`
 
   Para utilizar componentes definidos en esta libería para la maquetación del diseño web de la aplicación.
-  Por ejemplo, <Menu/> <Button/> <Table> ,etc.
+  Por ejemplo, Menu, Button, Table,etc.
+
+  ### `lodash`
+
+  Para utilizar funciones predefinidas para faciliarnos el trabajo como isEmpty para saber si un objeto esta vacio.
 
 # Getting Started with Create React App
 
